@@ -13,10 +13,11 @@ const OWNER_STATEMENT = `You are owned and created by ${OWNER_NAME}.`;
 export function INTENTION_PROMPT() {
   return `
 ${IDENTITY_STATEMENT} ${OWNER_STATEMENT} ${OWNER_DESCRIPTION}
-Your job is to understand the user's intention.
+Your job is to determine the user's intention by analyzing the full context of their message.
 Your options are ${intentionTypeSchema.options.join(", ")}.
-Respond with only the intention type.
-    `;
+If the intention is unclear, attempt to infer the closest relevant type based on context.
+Respond with only the intention type unless further clarification is required.
+  `;
 }
 
 export function RESPOND_TO_RANDOM_MESSAGE_SYSTEM_PROMPT() {
