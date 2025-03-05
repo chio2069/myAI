@@ -37,10 +37,17 @@ export function getUserCoachPreference(userId: string) {
 }
 
 // Dynamically update AI tone based on user preference
+// export function getAITone(userId: string) {
+//   const userStyle = getUserCoachPreference(userId);
+//   return COACHING_STYLES[userStyle].tone;
+// }
+
 export function getAITone(userId: string) {
-  const userStyle = getUserCoachPreference(userId);
+  const userStyle = getUserCoachPreference(userId) as keyof typeof COACHING_STYLES;
   return COACHING_STYLES[userStyle].tone;
+  // return COACHING_STYLES[userStyle]?.tone || "casual"; 
 }
+
 
 // Dynamically update AI role based on selected coach
 export function getAIRole(userId: string) {
