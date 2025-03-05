@@ -8,10 +8,10 @@ export const WORD_BREAK_MESSAGE: string = `Whoa, that's a heavy lift! Try trimmi
 export const HISTORY_CONTEXT_LENGTH: number = 7; // Number of messages to use for context when generating a response
 
 export function generateCoachResponse(userId: string, message: string, intent: string) {
-  const userStyle = getUserCoachPreference(userId) as keyof typeof COACHING_STYLES; // ✅ Cast userStyle explicitly
-  const coachPersona = COACHING_STYLES[userStyle]; // ✅ No more TypeScript error
+  const userStyle = getUserCoachPreference(userId) as keyof typeof COACHING_STYLES;
+  const coachPersona = COACHING_STYLES[userStyle];
 
-  const baseResponse = `(${coachPersona.name}): `;
+  const baseResponse = `${coachPersona.name}: `; // ✅ Fixed syntax
 
   if (intent === "fitness_related") {
     return baseResponse + (userStyle === "STRICT"
@@ -31,5 +31,3 @@ export function generateCoachResponse(userId: string, message: string, intent: s
 
   return baseResponse + "Here’s my response: " + message;
 }
-
-
