@@ -37,10 +37,11 @@ export function handleUserChoice(userId: string, choice: string) {
 }
 
 export function processUserInput(userId: string, message: string) {
-  if (!USER_COACH_PREFERENCE.has(userId)) {
+  // ✅ Check if user has a coach preference using getUserCoachPreference
+  const userPreference = getUserCoachPreference(userId);
+  if (!userPreference) {
     return handleUserChoice(userId, message.trim()); // ✅ First message must select a tone
   }
-
   return generateCoachResponse(userId, message, "fitness_related"); // ✅ Continue normal conversation
 }
 
