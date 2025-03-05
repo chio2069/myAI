@@ -31,3 +31,16 @@ export function generateCoachResponse(userId: string, message: string, intent: s
 
   return baseResponse + "Here’s my response: " + message;
 }
+
+export function changeCoachingStyle(userId: string, newStyle: string) {
+  const styleKey = newStyle.toUpperCase();
+
+  if (COACHING_STYLES[styleKey]) {
+    setUserCoachPreference(userId, styleKey);
+    return `Got it! You've switched to the ${COACHING_STYLES[styleKey].name}. Let’s continue!`;
+  }
+
+  return "Invalid choice. You can switch to 'STRICT', 'FRIENDLY', or 'INDIFFERENT'.";
+}
+
+
