@@ -6,9 +6,24 @@ import {
   AI_TONE,
 } from "@/configuration/identity";
 import { Chat, intentionTypeSchema } from "@/types";
+import { getAITone, getAIRole } from "@/configuration/identity";
 
 const IDENTITY_STATEMENT = `You are an AI assistant named ${AI_NAME}.`;
 const OWNER_STATEMENT = `You are owned and created by ${OWNER_NAME}.`;
+
+export function getDynamicPrompt(userId: string, userIntent: string) {
+  const aiTone = getAITone(userId);
+  const aiRole = getAIRole(userId);
+
+  const prompts = {
+    "general_question": `Respond in a ${aiTone} way while answering the user's question.`,
+    "fitness_related": `Tailor the response to fitness goals and well-being while maintaining your role: ${aiRole}.`,
+    "nutrition_related": `Provide nutritional guidance while keeping your coaching style: ${aiRole}.`,
+    "out_of_scope": "This question is outside my area of expertise. I specialize in fitness and nutrition.",
+  };
+
+  return prompts[userIntent] || `Respond in a ${aiTone} way.`;
+}
 
 export function INTENTION_PROMPT() {
   return `
