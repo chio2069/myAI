@@ -8,9 +8,6 @@ import {
 import { Chat, intentionTypeSchema } from "@/types";
 import { getAITone, getAIRole } from "@/configuration/identity";
 
-const IDENTITY_STATEMENT = `You are an AI assistant named ${AI_NAME}.`;
-const OWNER_STATEMENT = `You are owned and created by ${OWNER_NAME}.`;
-
 export function getDynamicPrompt(userId: string, userIntent: string) {
   const aiTone = getAITone(userId);
   const aiRole = getAIRole(userId);
@@ -24,6 +21,7 @@ export function getDynamicPrompt(userId: string, userIntent: string) {
 
   return prompts[userIntent] || `Respond in a ${aiTone} way.`;
 }
+
 
 export function INTENTION_PROMPT() {
   return `
