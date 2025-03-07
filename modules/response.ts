@@ -180,7 +180,7 @@ export class ResponseModule {
           const citations: Citation[] = await getCitationsFromChunks(chunks);
           const contextFromSources = await getContextFromSources(sources);
           const systemPrompt =
-            RESPOND_TO_QUESTION_SYSTEM_PROMPT(contextFromSources);
+            RESPOND_TO_QUESTION_SYSTEM_PROMPT(contextFromSources,userID);
           queueIndicator({
             controller,
             status: "Coming up with an answer",
