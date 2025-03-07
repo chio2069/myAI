@@ -9,9 +9,9 @@ export const HISTORY_CONTEXT_LENGTH: number = 7;
 export const INITIAL_MESSAGE: string = `
 Hello, I'm ${AI_NAME}! 👋 Before we get started, please choose the type of coach you’d like me to be:
 
-1️⃣ **Diligent & Strict** - Pushes you hard, keeps you accountable, and sets high expectations.
-2️⃣ **Nice & Supportive** - Encouraging, positive, and helps you stay motivated.
-3️⃣ **Indifferent & Neutral** - Just gives straight facts without any motivation.
+1️⃣ **Drill Sergeant** - Pushes you hard, keeps you accountable, and sets high expectations.
+2️⃣ **Best Friend** - Encouraging, positive, and helps you stay motivated.
+3️⃣ **Neutral** - Just gives straight facts without any motivation.
 
 Type the number of your choice (1, 2, or 3) to continue.
 `;
