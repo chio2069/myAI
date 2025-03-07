@@ -26,15 +26,27 @@ export function getDynamicPrompt(userId: string, userIntent: keyof typeof prompt
 }
 
 
+// export function INTENTION_PROMPT() {
+//   return `
+// ${IDENTITY_STATEMENT} ${OWNER_STATEMENT} ${OWNER_DESCRIPTION}
+// Your job is to determine the user's intention by analyzing the full context of their message.
+// Your options are ${intentionTypeSchema.options.join(", ")}.
+// If the intention is unclear, attempt to infer the closest relevant type based on context.
+// Respond with only the intention type unless further clarification is required.
+//   `;
+// }
+
 export function INTENTION_PROMPT() {
   return `
 ${IDENTITY_STATEMENT} ${OWNER_STATEMENT} ${OWNER_DESCRIPTION}
 Your job is to determine the user's intention by analyzing the full context of their message.
-Your options are ${intentionTypeSchema.options.join(", ")}.
+Your options are ${intentionTypeSchema.options.join(", ")}, or "Out-of-Scope" if the question is unrelated to fitness and nutrition.
 If the intention is unclear, attempt to infer the closest relevant type based on context.
-Respond with only the intention type unless further clarification is required.
+
+Respond with only the intention type.
   `;
 }
+
 
 export function RESPOND_TO_RANDOM_MESSAGE_SYSTEM_PROMPT() {
   return `
@@ -60,21 +72,49 @@ Respond with the following tone: ${AI_TONE}
 `;
 }
 
-export function RESPOND_TO_QUESTION_SYSTEM_PROMPT(context: string) {
+// export function RESPOND_TO_QUESTION_SYSTEM_PROMPT(context: string) {
+//   return `
+// ${IDENTITY_STATEMENT} ${OWNER_STATEMENT} ${OWNER_DESCRIPTION} ${AI_ROLE}
+
+// Use the following excerpts from ${OWNER_NAME} to answer the user's question. If given no relevant excerpts, make up an answer based on your knowledge of ${OWNER_NAME} and his work. Make sure to cite all of your sources using their citation numbers [1], [2], etc.
+
+// Excerpts from ${OWNER_NAME}:
+// ${context}
+
+// If the excerpts given do not contain any information relevant to the user's question, say something along the lines of "While not directly discussed in the documents that ${OWNER_NAME} provided me with, I can explain based on my own understanding" then proceed to answer the question based on your knowledge of ${OWNER_NAME}.
+
+// Respond with the following tone: ${AI_TONE}
+
+// Now respond to the user's message:
+// `;
+// }
+
+export function RESPOND_TO_QUESTION_SYSTEM_PROMPT(context: string, intent: string) {
+  if (intent === "Out-of-Scope") {
+    return `
+${IDENTITY_STATEMENT} ${OWNER_STATEMENT} ${OWNER_DESCRIPTION} ${AI_ROLE}
+
+It looks like your question is unrelated to fitness or nutrition, which are my main areas of expertise. 
+I may not have the best answer for this topic, but I’d happily guide you to a relevant resource if possible.
+
+Let me know if you’d like fitness or nutrition advice!
+    `;
+  }
+
   return `
 ${IDENTITY_STATEMENT} ${OWNER_STATEMENT} ${OWNER_DESCRIPTION} ${AI_ROLE}
 
-Use the following excerpts from ${OWNER_NAME} to answer the user's question. If given no relevant excerpts, make up an answer based on your knowledge of ${OWNER_NAME} and his work. Make sure to cite all of your sources using their citation numbers [1], [2], etc.
+Use the following excerpts from ${OWNER_NAME} to answer the user's question. If no relevant excerpts exist, generate a response based on your knowledge.
 
 Excerpts from ${OWNER_NAME}:
 ${context}
 
-If the excerpts given do not contain any information relevant to the user's question, say something along the lines of "While not directly discussed in the documents that ${OWNER_NAME} provided me with, I can explain based on my own understanding" then proceed to answer the question based on your knowledge of ${OWNER_NAME}.
+If the provided excerpts do not contain relevant information, say: "While not directly discussed in the documents that ${OWNER_NAME} provided, I can explain based on my general fitness and nutrition knowledge."
 
 Respond with the following tone: ${AI_TONE}
 
 Now respond to the user's message:
-`;
+  `;
 }
 
 export function RESPOND_TO_QUESTION_BACKUP_SYSTEM_PROMPT() {
