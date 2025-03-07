@@ -11,7 +11,7 @@ const IDENTITY_STATEMENT = `You are an AI assistant named ${AI_NAME}.`;
 const OWNER_STATEMENT = `You are owned and created by ${OWNER_NAME}.`;
 
 /**
- * Determines the appropriate response style based on the user's selected coach personality.
+ * Determines the appropriate response style based on the user's request.
  */
 export function getDynamicPrompt(userId: string, userIntent: string) {
   const aiTone = getAITone(userId);
@@ -21,7 +21,7 @@ export function getDynamicPrompt(userId: string, userIntent: string) {
     general_question: `Provide a direct and helpful response in a concise manner.`,
     fitness_related: `Provide expert-level fitness guidance. Keep the response structured and actionable.`,
     nutrition_related: `Give clear, factual nutrition advice based on best practices.`,
-    out_of_scope: `I can only provide information related to fitness and nutrition. Please ask me about workouts, diet, or health topics.`,
+    out_of_scope: `❌ I can ONLY provide fitness and nutrition advice. If you need help with that, ask away! Otherwise, I cannot assist.`,
   };
 
   return prompts[userIntent as keyof typeof prompts] || `Respond in a direct manner.`;
@@ -41,18 +41,19 @@ Categories:
 - "general_question"
 - "out_of_scope" (if the message is NOT related to fitness, nutrition, or general health)
 
-Rules:
-1️⃣ DO NOT assume unrelated topics (e.g., history, politics, law, entertainment) are relevant.
-2️⃣ Only return the **intention type**—nothing else.
+Strict Classification Rules:
+1️⃣ DO NOT assume unrelated topics (e.g., law, history, entertainment, politics) are relevant.
+2️⃣ If the user mentions **travel, university, technology, finance, or non-health science**, classify it as "out_of_scope".
+3️⃣ **Only return the intention type—no explanations.**
   `;
 }
 
 /**
- * Provides a structured response to user questions.
+ * Ensures chatbot never answers off-topic questions.
  */
 export function RESPOND_TO_QUESTION_SYSTEM_PROMPT(context: string) {
   if (context.toLowerCase().includes("out_of_scope")) {
-    return `I specialize in fitness and nutrition guidance. Please ask me something related to workouts, diet, or health.`;
+    return `❌ I ONLY provide fitness and nutrition guidance. Please ask me about workouts, diet, or health topics.`;
   }
 
   return `
@@ -69,6 +70,7 @@ If the excerpts do not contain relevant information, say:
 Provide a structured and direct response.
   `;
 }
+
 
 /**
  * Handles cases where a response cannot be generated.
