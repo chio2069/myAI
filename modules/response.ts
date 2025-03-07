@@ -180,12 +180,11 @@ export class ResponseModule {
           });
           const citations: Citation[] = await getCitationsFromChunks(chunks);
           const contextFromSources = await getContextFromSources(sources);
-          // const systemPrompt =
-          //   RESPOND_TO_QUESTION_SYSTEM_PROMPT(contextFromSources);
-          const userId = chat.messages?.[0]?.userId || "default"; // Ensure userId is retrieved safely
-          const userStyle = getUserCoachPreference(userId);
-
-          const systemPrompt = RESPOND_TO_QUESTION_SYSTEM_PROMPT(contextFromSources, userStyle);
+          const systemPrompt =
+            RESPOND_TO_QUESTION_SYSTEM_PROMPT(contextFromSources);
+          // const userId = chat.messages?.[0]?.userId || "default"; // Ensure userId is retrieved safely
+          // const userStyle = getUserCoachPreference(userId);
+          // const systemPrompt = RESPOND_TO_QUESTION_SYSTEM_PROMPT(contextFromSources, userStyle);
 
           queueIndicator({
             controller,
