@@ -17,14 +17,13 @@ export function getDynamicPrompt(userId: string, userIntent: string) {
 
   const prompts = {
     "general_question": `Respond in a ${aiTone} way while answering the user's question.`,
-    "fitness_related": `Tailor the response to fitness goals and well-being while maintaining your role: ${aiRole}.`,
-    "nutrition_related": `Provide nutritional guidance while keeping your coaching style: ${aiRole}.`,
-    "out_of_scope": `I'm here to assist with fitness and nutrition-related questions! If you have a workout, diet, or health-related question, I'd be happy to help. 💪`,
+    "fitness_related": `Act as a ${aiRole} while coaching fitness. Keep your personality extreme!`,
+    "nutrition_related": `Stay in character as a ${aiRole} while providing nutrition guidance.`,
+    "out_of_scope": `I only answer fitness and nutrition questions. If you need help with that, let's go! Otherwise, I have no information for you.`,
   };
 
   return prompts[userIntent] || `Respond in a ${aiTone} way.`;
 }
-
 
 export function INTENTION_PROMPT() {
   return `
