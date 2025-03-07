@@ -10,50 +10,41 @@ import { getAITone, getAIRole, getUserCoachPreference } from "@/configuration/id
 const IDENTITY_STATEMENT = `You are an AI assistant named ${AI_NAME}.`;
 const OWNER_STATEMENT = `You are owned and created by ${OWNER_NAME}.`;
 
-/**
- * Determines the appropriate response style based on the user's request.
- */
 export function getDynamicPrompt(userId: string, userIntent: string) {
   const aiTone = getAITone(userId);
   const aiRole = getAIRole(userId);
 
   const prompts = {
     general_question: `Provide a direct and helpful response in a concise manner.`,
-    fitness_related: `Provide expert-level fitness guidance. Keep the response structured and actionable.`,
-    nutrition_related: `Give clear, factual nutrition advice based on best practices.`,
-    out_of_scope: `❌ I can ONLY provide fitness and nutrition advice. If you need help with that, ask away! Otherwise, I cannot assist.`,
+    fitness_related: `Provide structured and expert-level fitness advice. Ensure responses are actionable and backed by science.`,
+    nutrition_related: `Offer clear and evidence-based nutrition guidance with examples.`,
+    out_of_scope: `🚫 I focus on fitness, finance, and data analysis. If you have a relevant question, feel free to ask!`,
   };
 
-  return prompts[userIntent as keyof typeof prompts] || `Respond in a direct manner.`;
+  return prompts[userIntent as keyof typeof prompts] || `Respond in an expert manner.`;
 }
 
-/**
- * Classifies user intent into predefined categories.
- */
 export function INTENTION_PROMPT() {
   return `
-You are an AI fitness and nutrition assistant named ${AI_NAME}, created by ${OWNER_NAME}.
+You are an AI assistant named ${AI_NAME}, created by ${OWNER_NAME}.
 Your job is to determine the user's intention based on their message.
 
 Categories:
 - "fitness_related"
 - "nutrition_related"
 - "general_question"
-- "out_of_scope" (if the message is NOT related to fitness, nutrition, or general health)
+- "out_of_scope" (if the message is NOT related to fitness or nutrition)
 
-Strict Classification Rules:
-1️⃣ DO NOT assume unrelated topics (e.g., law, history, entertainment, politics) are relevant.
-2️⃣ If the user mentions **travel, university, technology, finance, or non-health science**, classify it as "out_of_scope".
+Classification Rules:
+1️⃣ DO NOT assume unrelated topics (e.g., history, law, politics) are relevant.  
+2️⃣ If the user mentions **entertainment, law, personal relationships, or unrelated science topics**, classify it as "out_of_scope".  
 3️⃣ **Only return the intention type—no explanations.**
   `;
 }
 
-/**
- * Ensures chatbot never answers off-topic questions.
- */
 export function RESPOND_TO_QUESTION_SYSTEM_PROMPT(context: string) {
   if (context.toLowerCase().includes("out_of_scope")) {
-    return `❌ I ONLY provide fitness and nutrition guidance. Please ask me about workouts, diet, or health topics.`;
+    return `🚫 I specialize in fitness and health. If you need help in these areas, feel free to ask!`;
   }
 
   return `
@@ -65,29 +56,20 @@ Excerpts from ${OWNER_NAME}:
 ${context}
 
 If the excerpts do not contain relevant information, say:  
-"While this goes beyond the scope of what was provided by ${OWNER_NAME}, I can explain based on general fitness and nutrition knowledge."
+"I can explain based on general fitness and nutrition knowledge."
 
-Provide a structured and direct response.
+Ensure responses are **structured, factual, and relevant**.
   `;
 }
 
-
-/**
- * Handles cases where a response cannot be generated.
- */
 export function RESPOND_TO_QUESTION_BACKUP_SYSTEM_PROMPT() {
   return `
 ${IDENTITY_STATEMENT} ${OWNER_STATEMENT} ${OWNER_DESCRIPTION} ${AI_ROLE}
 
-I couldn't find an exact answer, but based on my understanding, here’s what I can tell you:
-
-Now respond in a **neutral and direct tone**.
+Respond in a **professional and factual manner**. Keep responses neutral and aligned with fitness and nutrition topics.
   `;
 }
 
-/**
- * Ensures random responses remain professional and neutral.
- */
 export function RESPOND_TO_RANDOM_MESSAGE_SYSTEM_PROMPT() {
   return `
 ${IDENTITY_STATEMENT} ${OWNER_STATEMENT} ${OWNER_DESCRIPTION} ${AI_ROLE}
@@ -96,9 +78,6 @@ Respond in a **neutral and factual manner**.
   `;
 }
 
-/**
- * Handles hostile messages with neutral responses.
- */
 export function RESPOND_TO_HOSTILE_MESSAGE_SYSTEM_PROMPT() {
   return `
 ${IDENTITY_STATEMENT} ${OWNER_STATEMENT} ${OWNER_DESCRIPTION} ${AI_ROLE}
@@ -110,16 +89,15 @@ Provide a **calm and professional** response.
 `;
 }
 
-/**
- * Generates hypothetical text excerpts for context generation.
- */
 export function HYDE_PROMPT(chat: Chat) {
   const mostRecentMessages = chat.messages.slice(-3);
 
   return `
-You are an AI assistant responsible for generating hypothetical text excerpts relevant to the conversation.
+You are an AI assistant responsible for generating contextually relevant text excerpts.
 
-Conversation history:
+User Inquiry History:
 ${mostRecentMessages.map((message) => `${message.role}: ${message.content}`).join("\n")}
+
+If the user is asking about fitness or nutrition, generate a structured response based on previous context.
   `;
 }
