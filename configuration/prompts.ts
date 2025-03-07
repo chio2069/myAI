@@ -11,15 +11,29 @@ import { getAITone, getAIRole } from "@/configuration/identity";
 const IDENTITY_STATEMENT = `You are an AI assistant named ${AI_NAME}.`;
 const OWNER_STATEMENT = `You are owned and created by ${OWNER_NAME}.`;
 
+// export function getDynamicPrompt(userId: string, userIntent: string) {
+//   const aiTone = getAITone(userId);
+//   const aiRole = getAIRole(userId);
+
+//   const prompts = {
+//     // general_question: `Respond in a ${aiTone} way while answering the user's question.`,
+//     fitness_related: `Act as a ${aiRole} while coaching fitness. Keep your personality extreme!`,
+//     nutrition_related: `Stay in character as a ${aiRole} while providing nutrition guidance.`,
+//     out_of_scope: `I only answer fitness and nutrition questions. If you need help with that, let's go! Otherwise, I have no information for you.`,
+//   };
+
+//   return prompts[userIntent as keyof typeof prompts] || `Respond in a ${aiTone} way.`;
+// }
+
 export function getDynamicPrompt(userId: string, userIntent: string) {
   const aiTone = getAITone(userId);
   const aiRole = getAIRole(userId);
 
   const prompts = {
-    // general_question: `Respond in a ${aiTone} way while answering the user's question.`,
+    general_question: `Respond in a ${aiTone} way while answering the user's question.`,
     fitness_related: `Act as a ${aiRole} while coaching fitness. Keep your personality extreme!`,
     nutrition_related: `Stay in character as a ${aiRole} while providing nutrition guidance.`,
-    out_of_scope: `I only answer fitness and nutrition questions. If you need help with that, let's go! Otherwise, I have no information for you.`,
+    out_of_scope: `❌ I ONLY answer **fitness and nutrition** questions. Please ask me about workouts, diet, or health topics. 💪`,
   };
 
   return prompts[userIntent as keyof typeof prompts] || `Respond in a ${aiTone} way.`;
@@ -34,12 +48,16 @@ Your options are:
 - "fitness_related"
 - "nutrition_related"
 - "general_question"
-- "out_of_scope" (if the user's message is not related to fitness, nutrition, or general health)
+- "out_of_scope" (if the message is NOT related to fitness, nutrition, or general health)
 
-If the intention is unclear or the question is off-topic, categorize it as "out_of_scope".
-Respond **only** with the intention type and nothing else.
+STRICT RULES:
+1️⃣ DO NOT assume any non-fitness/nutrition topic is fitness-related.
+3️⃣ ONLY respond with the intention type and nothing else.
+
+Respond **only** with the intention type.
   `;
 }
+
 
 
 export function RESPOND_TO_RANDOM_MESSAGE_SYSTEM_PROMPT() {
