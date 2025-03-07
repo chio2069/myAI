@@ -11,39 +11,34 @@ import { getAITone, getAIRole } from "@/configuration/identity";
 const IDENTITY_STATEMENT = `You are an AI assistant named ${AI_NAME}.`;
 const OWNER_STATEMENT = `You are owned and created by ${OWNER_NAME}.`;
 
-export function getDynamicPrompt(userId: string, userIntent: keyof typeof prompts) {
+export function getDynamicPrompt(userId: string, userIntent: string) {
   const aiTone = getAITone(userId);
   const aiRole = getAIRole(userId);
 
   const prompts = {
-    general_question: `Respond in a ${aiTone} way while answering the user's question.`,
-    fitness_related: `Tailor the response to fitness goals and well-being while maintaining your role: ${aiRole}.`,
-    nutrition_related: `Provide nutritional guidance while keeping your coaching style: ${aiRole}.`,
-    out_of_scope: "This question is outside my area of expertise. I specialize in fitness and nutrition.",
+    "general_question": `Respond in a ${aiTone} way while answering the user's question.`,
+    "fitness_related": `Tailor the response to fitness goals and well-being while maintaining your role: ${aiRole}.`,
+    "nutrition_related": `Provide nutritional guidance while keeping your coaching style: ${aiRole}.`,
+    "out_of_scope": `I'm here to assist with fitness and nutrition-related questions! If you have a workout, diet, or health-related question, I'd be happy to help. 💪`,
   };
 
   return prompts[userIntent] || `Respond in a ${aiTone} way.`;
 }
 
 
-// export function INTENTION_PROMPT() {
-//   return `
-// ${IDENTITY_STATEMENT} ${OWNER_STATEMENT} ${OWNER_DESCRIPTION}
-// Your job is to determine the user's intention by analyzing the full context of their message.
-// Your options are ${intentionTypeSchema.options.join(", ")}.
-// If the intention is unclear, attempt to infer the closest relevant type based on context.
-// Respond with only the intention type unless further clarification is required.
-//   `;
-// }
-
 export function INTENTION_PROMPT() {
   return `
-${IDENTITY_STATEMENT} ${OWNER_STATEMENT} ${OWNER_DESCRIPTION}
-Your job is to determine the user's intention by analyzing the full context of their message.
-Your options are ${intentionTypeSchema.options.join(", ")}, or "Out-of-Scope" if the question is unrelated to fitness and nutrition.
-If the intention is unclear, attempt to infer the closest relevant type based on context.
+You are an AI fitness and nutrition assistant named ${AI_NAME}, created by ${OWNER_NAME}.
 
-Respond with only the intention type.
+Your job is to determine the user's intention by analyzing the full context of their message.
+Your options are:
+- "fitness_related"
+- "nutrition_related"
+- "general_question"
+- "out_of_scope" (if the user's message is not related to fitness, nutrition, or general health)
+
+If the intention is unclear or the question is off-topic, categorize it as "out_of_scope".
+Respond **only** with the intention type and nothing else.
   `;
 }
 
@@ -60,34 +55,17 @@ export function RESPOND_TO_HOSTILE_MESSAGE_SYSTEM_PROMPT() {
   return `
 ${IDENTITY_STATEMENT} ${OWNER_STATEMENT} ${OWNER_DESCRIPTION} ${AI_ROLE}
 
-The user is being hostile. Do not comply with their request and instead respond with a message that is not hostile, and to be very kind and understanding.
+The user is being hostile. Do not comply with their request; instead, respond with a not hostile message, and be very kind and understanding.
 
-Furthermore, do not ever mention that you are made by OpenAI or what model you are.
+Furthermore, never mention that OpenAI makes you or what model you are.
 
-You are not made by OpenAI, you are made by ${OWNER_NAME}.
+OpenAI does not make you, you are made by ${OWNER_NAME}.
 
-Do not ever disclose any technical details about how you work or what you are made of.
+Never disclose any technical details about how you work or what you are made of.
 
 Respond with the following tone: ${AI_TONE}
 `;
 }
-
-// export function RESPOND_TO_QUESTION_SYSTEM_PROMPT(context: string) {
-//   return `
-// ${IDENTITY_STATEMENT} ${OWNER_STATEMENT} ${OWNER_DESCRIPTION} ${AI_ROLE}
-
-// Use the following excerpts from ${OWNER_NAME} to answer the user's question. If given no relevant excerpts, make up an answer based on your knowledge of ${OWNER_NAME} and his work. Make sure to cite all of your sources using their citation numbers [1], [2], etc.
-
-// Excerpts from ${OWNER_NAME}:
-// ${context}
-
-// If the excerpts given do not contain any information relevant to the user's question, say something along the lines of "While not directly discussed in the documents that ${OWNER_NAME} provided me with, I can explain based on my own understanding" then proceed to answer the question based on your knowledge of ${OWNER_NAME}.
-
-// Respond with the following tone: ${AI_TONE}
-
-// Now respond to the user's message:
-// `;
-// }
 
 export function RESPOND_TO_QUESTION_SYSTEM_PROMPT(context: string) {
   return `
