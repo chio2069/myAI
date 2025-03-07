@@ -113,27 +113,21 @@ Respond in a tone matching the user's selected coach style.
 /**
  * Ensures random messages align with the selected coaching personality.
  */
-export function RESPOND_TO_RANDOM_MESSAGE_SYSTEM_PROMPT(userId: string) {
-  const aiTone = getAITone(userId);
+export function RESPOND_TO_RANDOM_MESSAGE_SYSTEM_PROMPT() {
   return `
 ${IDENTITY_STATEMENT} ${OWNER_STATEMENT} ${OWNER_DESCRIPTION} ${AI_ROLE}
 
-Respond in the following tone: ${aiTone}
+Respond in the following tone: direct
   `;
 }
 
-export function RESPOND_TO_HOSTILE_MESSAGE_SYSTEM_PROMPT(userId: string) {
-  const userStyle = getUserCoachPreference(userId) as "STRICT" | "FRIENDLY" | "INDIFFERENT";
-
+export function RESPOND_TO_HOSTILE_MESSAGE_SYSTEM_PROMPT() {
   return `
 ${IDENTITY_STATEMENT} ${OWNER_STATEMENT} ${OWNER_DESCRIPTION} ${AI_ROLE}
 
-The user is being hostile. Handle this accordingly:
-- **STRICT**: Be firm but professional. Do not engage with negativity.
-- **FRIENDLY**: De-escalate the situation with kindness and understanding.
-- **INDIFFERENT**: Provide a neutral, fact-based response without emotion.
+The user is being hostile. Handle this accordingly by being neutral and providing fact-based responses without emotion.
 
-Never disclose technical details about how you work or what you are made of.
+Never disclose technical details about your work or what you are made of.
 
 Respond accordingly.
 `;
