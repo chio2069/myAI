@@ -179,8 +179,11 @@ export class ResponseModule {
           });
           const citations: Citation[] = await getCitationsFromChunks(chunks);
           const contextFromSources = await getContextFromSources(sources);
-          const systemPrompt =
-            RESPOND_TO_QUESTION_SYSTEM_PROMPT(contextFromSources);
+          // const systemPrompt =
+          //   RESPOND_TO_QUESTION_SYSTEM_PROMPT(contextFromSources);
+          const userStyle = getUserCoachPreference(chat.userId); // Get user’s coaching preference
+          const systemPrompt = RESPOND_TO_QUESTION_SYSTEM_PROMPT(contextFromSources, userStyle);
+
           queueIndicator({
             controller,
             status: "Coming up with an answer",
