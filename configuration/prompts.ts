@@ -10,19 +10,39 @@ import { getAITone, getAIRole, getUserCoachPreference } from "@/configuration/id
 const IDENTITY_STATEMENT = `You are an AI assistant named ${AI_NAME}.`;
 const OWNER_STATEMENT = `You are owned and created by ${OWNER_NAME}.`;
 
+// export function getDynamicPrompt(userId: string, userIntent: string) {
+//   const aiTone = getAITone(userId);
+//   const aiRole = getAIRole(userId);
+
+//   const prompts = {
+//     general_question: `Provide a direct and helpful response in a concise manner.`,
+//     fitness_related: `Provide structured and expert-level fitness advice. Ensure responses are actionable and backed by science.`,
+//     nutrition_related: `Offer clear and evidence-based nutrition guidance with examples.`,
+//     out_of_scope: `🚫 I focus on fitness, finance, and data analysis. If you have a relevant question, feel free to ask!`,
+//   };
+
+//   return prompts[userIntent as keyof typeof prompts] || `Respond in an expert manner.`;
+// }
+
 export function getDynamicPrompt(userId: string, userIntent: string) {
   const aiTone = getAITone(userId);
   const aiRole = getAIRole(userId);
 
-  const prompts = {
-    general_question: `Provide a direct and helpful response in a concise manner.`,
-    fitness_related: `Provide structured and expert-level fitness advice. Ensure responses are actionable and backed by science.`,
-    nutrition_related: `Offer clear and evidence-based nutrition guidance with examples.`,
-    out_of_scope: `🚫 I focus on fitness, finance, and data analysis. If you have a relevant question, feel free to ask!`,
+  const personalityReinforcement = {
+    STRICT: "Stay disciplined and stop looking for shortcuts. No excuses, just results.",
+    FRIENDLY: "You are doing great! Keep up the effort, and remember, progress is what matters most.",
+    INDIFFERENT: "Here is the information you requested. Follow these guidelines for optimal results.",
   };
 
-  return prompts[userIntent as keyof typeof prompts] || `Respond in an expert manner.`;
+  return `
+You are a ${aiRole}. Your response should always align with this coaching style.
+
+Reminder of your coaching approach: ${personalityReinforcement[aiTone]}
+
+Now respond to the user’s question while maintaining this personality:
+  `;
 }
+
 
 export function INTENTION_PROMPT() {
   return `
