@@ -35,12 +35,22 @@ Categories:
 - "general_question"
 - "out_of_scope" (if the message is NOT related to fitness or nutrition)
 
-Classification Rules:
-1️⃣ DO NOT assume unrelated topics (e.g., history, law, politics) are relevant.  
-2️⃣ If the user mentions **entertainment, law, personal relationships, or unrelated science topics**, classify it as "out_of_scope".  
-3️⃣ **Only return the intention type—no explanations.**
+### STRICT Classification Rules:
+❌ **DO NOT classify entertainment, history, pop culture, or general trivia as relevant.**  
+❌ **If the message mentions movies, TV shows, awards, celebrities, books, or music, classify it as "out_of_scope".**  
+❌ **If the message involves history, law, social media trends, or video games, classify it as "out_of_scope".**  
+
+Examples:
+- ❌ "Who won the Academy Award for Best Picture in 2023?" → "out_of_scope"
+- ❌ "Who is the richest person in the world?" → "out_of_scope"
+- ❌ "What's the best programming language?" → "data_analysis_related"
+- ✅ "How does strength training help with fat loss?" → "fitness_related"
+- ✅ "What is the fruit with least calories?" → "nutrition_related"
+
+**Return ONLY the classification type—no explanations.**
   `;
 }
+
 
 export function RESPOND_TO_QUESTION_SYSTEM_PROMPT(context: string) {
   if (context.toLowerCase().includes("out_of_scope")) {
