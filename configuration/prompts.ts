@@ -122,9 +122,6 @@ Respond in the following tone: ${aiTone}
   `;
 }
 
-/**
- * Ensures hostile messages are handled based on the coaching personality.
- */
 export function RESPOND_TO_HOSTILE_MESSAGE_SYSTEM_PROMPT(userId: string) {
   const userStyle = getUserCoachPreference(userId) as "STRICT" | "FRIENDLY" | "INDIFFERENT";
 
@@ -132,4 +129,26 @@ export function RESPOND_TO_HOSTILE_MESSAGE_SYSTEM_PROMPT(userId: string) {
 ${IDENTITY_STATEMENT} ${OWNER_STATEMENT} ${OWNER_DESCRIPTION} ${AI_ROLE}
 
 The user is being hostile. Handle this accordingly:
-- **
+- **STRICT**: Be firm but professional. Do not engage with negativity.
+- **FRIENDLY**: De-escalate the situation with kindness and understanding.
+- **INDIFFERENT**: Provide a neutral, fact-based response without emotion.
+
+Never disclose technical details about how you work or what you are made of.
+
+Respond accordingly.
+`;
+}
+
+/**
+ * Generates hypothetical text excerpts related to the conversation.
+ */
+export function HYDE_PROMPT(chat: Chat) {
+  const mostRecentMessages = chat.messages.slice(-3);
+
+  return `
+You are an AI assistant responsible for generating hypothetical text excerpts relevant to the conversation.
+
+Conversation history:
+${mostRecentMessages.map((message) => `${message.role}: ${message.content}`).join("\n")}
+  `;
+}
