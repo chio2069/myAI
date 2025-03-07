@@ -45,29 +45,58 @@ export function processUserInput(userId: string, message: string) {
   return generateCoachResponse(userId, message, "fitness_related"); // ✅ Continue normal conversation
 }
 
+// export function generateCoachResponse(userId: string, message: string, intent: string) {
+//   const userStyle = getUserCoachPreference(userId) as keyof typeof COACHING_STYLES;
+//   const coachPersona = COACHING_STYLES[userStyle];
+
+//   const baseResponse = `${coachPersona.name}: `; // ✅ Fixed syntax
+
+//   if (intent === "fitness_related") {
+//     return baseResponse + (userStyle === "STRICT"
+//       ? "No excuses! Stay disciplined and push harder. Your body won't change unless you commit fully."
+//       : userStyle === "FRIENDLY"
+//       ? "You're doing amazing! Keep pushing yourself, and remember, every step counts! 💪"
+//       : "Here’s the information you need: Proper training and consistency are key. Stick to the plan.");
+//   }
+
+//   if (intent === "nutrition_related") {
+//     return baseResponse + (userStyle === "STRICT"
+//       ? "Stick to your meal plan! No junk food—discipline is key to success."
+//       : userStyle === "FRIENDLY"
+//       ? "Eating healthy is all about balance! You're making great choices—keep it up. 🍎"
+//       : "Your nutrition should be based on macros and calorie intake. Follow the guidelines for best results.");
+//   }
+
+//   return baseResponse + "Here’s my response: " + message;
+// }
+
 export function generateCoachResponse(userId: string, message: string, intent: string) {
   const userStyle = getUserCoachPreference(userId) as keyof typeof COACHING_STYLES;
   const coachPersona = COACHING_STYLES[userStyle];
 
-  const baseResponse = `${coachPersona.name}: `; // ✅ Fixed syntax
+  const baseResponse = `${coachPersona.name}: `; 
 
   if (intent === "fitness_related") {
     return baseResponse + (userStyle === "STRICT"
-      ? "No excuses! Stay disciplined and push harder. Your body won't change unless you commit fully."
+      ? "GET UP AND WORK! Excuses? I DON'T HEAR EXCUSES, I HEAR RESULTS! Drop and give me 20! You want this or not?! 🔥"
       : userStyle === "FRIENDLY"
-      ? "You're doing amazing! Keep pushing yourself, and remember, every step counts! 💪"
-      : "Here’s the information you need: Proper training and consistency are key. Stick to the plan.");
+      ? "OMG, YES! You're crushing it!! Keep going, I’m so proud of you! Let's make this workout amazing!! 🥳💪"
+      : "To improve physical health, perform strength training at least 2-3 times per week. Exercise selection should be based on muscle engagement.");
   }
 
   if (intent === "nutrition_related") {
     return baseResponse + (userStyle === "STRICT"
-      ? "Stick to your meal plan! No junk food—discipline is key to success."
+      ? "NO JUNK FOOD! YOU EAT CLEAN, YOU WIN. STOP MAKING EXCUSES! Your diet needs DISCIPLINE! Stick to your macros or go home! 🍗🥦"
       : userStyle === "FRIENDLY"
-      ? "Eating healthy is all about balance! You're making great choices—keep it up. 🍎"
-      : "Your nutrition should be based on macros and calorie intake. Follow the guidelines for best results.");
+      ? "Yasss! Healthy eating is all about balance! Go treat yourself to some protein pancakes—you're doing amazing!! 😍🥞"
+      : "A balanced diet should consist of proteins, carbohydrates, and fats. Macronutrient distribution varies based on fitness goals.");
   }
 
-  return baseResponse + "Here’s my response: " + message;
+  return baseResponse + (userStyle === "STRICT"
+    ? "STOP OVERTHINKING! GET TO WORK! MINDSET IS EVERYTHING! 🚀"
+    : userStyle === "FRIENDLY"
+    ? "Eeep! This is so exciting! You got this, BFF!! 🌟✨"
+    : "Your request has been processed. Here is the requested information.");
 }
 
 
