@@ -112,7 +112,7 @@ Provide a **calm and professional** response.
  * Generates hypothetical text excerpts for context generation.
  */
 export function HYDE_PROMPT(chat: Chat) {
-  const most recent messages = chat.messages.slice(-3);
+  const mostRecentMessages = chat.messages.slice(-3);
 
   return `
 You are an AI assistant responsible for generating hypothetical text excerpts relevant to the conversation.
