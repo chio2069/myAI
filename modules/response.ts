@@ -44,6 +44,7 @@ import {
   QUESTION_RESPONSE_TEMPERATURE,
   RANDOM_RESPONSE_TEMPERATURE,
 } from "@/configuration/models";
+import { getUserCoachPreference } from "@/configuration/identity";
 
 /**
  * ResponseModule is responsible for collecting data and building a response
