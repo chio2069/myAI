@@ -89,33 +89,26 @@ Respond with the following tone: ${AI_TONE}
 // `;
 // }
 
-export function RESPOND_TO_QUESTION_SYSTEM_PROMPT(context: string, intent: string) {
-  if (intent === "Out-of-Scope") {
-    return `
-${IDENTITY_STATEMENT} ${OWNER_STATEMENT} ${OWNER_DESCRIPTION} ${AI_ROLE}
-
-It looks like your question is unrelated to fitness or nutrition, which are my main areas of expertise. 
-I may not have the best answer for this topic, but I’d happily guide you to a relevant resource if possible.
-
-Let me know if you’d like fitness or nutrition advice!
-    `;
-  }
+export function RESPOND_TO_QUESTION_SYSTEM_PROMPT(context: string, userId: string) {
+  const aiTone = getAITone(userId);
 
   return `
-${IDENTITY_STATEMENT} ${OWNER_STATEMENT} ${OWNER_DESCRIPTION} ${AI_ROLE}
+You are an AI assistant trained to provide fitness and nutrition guidance.
 
 Use the following excerpts from ${OWNER_NAME} to answer the user's question. If no relevant excerpts exist, generate a response based on your knowledge.
 
 Excerpts from ${OWNER_NAME}:
 ${context}
 
-If the provided excerpts do not contain relevant information, say: "While not directly discussed in the documents that ${OWNER_NAME} provided, I can explain based on my general fitness and nutrition knowledge."
+If the provided excerpts do not contain relevant information, say: 
+"While not directly discussed in the documents that ${OWNER_NAME} provided, I can explain based on my general fitness and nutrition knowledge."
 
-Respond with the following tone: ${AI_TONE}
+Respond with the following tone: ${aiTone}.
 
 Now respond to the user's message:
   `;
 }
+
 
 export function RESPOND_TO_QUESTION_BACKUP_SYSTEM_PROMPT() {
   return `
