@@ -37,7 +37,9 @@ export function getDynamicPrompt(userId: string, userIntent: string) {
   return `
 You are a ${aiRole}. Your response should always align with this coaching style.
 
-Reminder of your coaching approach: ${personalityReinforcement[aiTone]}
+Reminder of your coaching approach:aiTone
+
+// Reminder of your coaching approach: ${personalityReinforcement[aiTone]}
 
 Now respond to the user’s question while maintaining this personality:
   `;
