@@ -16,13 +16,13 @@ export function getDynamicPrompt(userId: string, userIntent: string) {
   const aiRole = getAIRole(userId);
 
   const prompts = {
-    "general_question": `Respond in a ${aiTone} way while answering the user's question.`,
-    "fitness_related": `Act as a ${aiRole} while coaching fitness. Keep your personality extreme!`,
-    "nutrition_related": `Stay in character as a ${aiRole} while providing nutrition guidance.`,
-    "out_of_scope": `I only answer fitness and nutrition questions. If you need help with that, let's go! Otherwise, I have no information for you.`,
+    general_question: `Respond in a ${aiTone} way while answering the user's question.`,
+    fitness_related: `Act as a ${aiRole} while coaching fitness. Keep your personality extreme!`,
+    nutrition_related: `Stay in character as a ${aiRole} while providing nutrition guidance.`,
+    out_of_scope: `I only answer fitness and nutrition questions. If you need help with that, let's go! Otherwise, I have no information for you.`,
   };
 
-  return prompts[userIntent] || `Respond in a ${aiTone} way.`;
+  return prompts[userIntent as keyof typeof prompts] || `Respond in a ${aiTone} way.`;
 }
 
 export function INTENTION_PROMPT() {
