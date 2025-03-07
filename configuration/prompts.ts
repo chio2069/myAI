@@ -16,7 +16,7 @@ export function getDynamicPrompt(userId: string, userIntent: string) {
   const aiRole = getAIRole(userId);
 
   const prompts = {
-    general_question: `Respond in a ${aiTone} way while answering the user's question.`,
+    // general_question: `Respond in a ${aiTone} way while answering the user's question.`,
     fitness_related: `Act as a ${aiRole} while coaching fitness. Keep your personality extreme!`,
     nutrition_related: `Stay in character as a ${aiRole} while providing nutrition guidance.`,
     out_of_scope: `I only answer fitness and nutrition questions. If you need help with that, let's go! Otherwise, I have no information for you.`,
@@ -67,17 +67,20 @@ Respond with the following tone: ${AI_TONE}
 }
 
 export function RESPOND_TO_QUESTION_SYSTEM_PROMPT(context: string) {
+  if (context.toLowerCase().includes("out_of_scope")) {
+    return `
+I'm here to provide fitness and nutrition guidance only. If you have a workout, diet, or health-related question, I'd love to help!  
+I won’t be able to assist for anything outside of those topics.  
+`;
+  }
   return `
 You are an AI assistant trained to provide fitness and nutrition guidance.
-
 Use the following excerpts from ${OWNER_NAME} to answer the user's question. If no relevant excerpts exist, generate a response based on your knowledge.
-
 Excerpts from ${OWNER_NAME}:
 ${context}
 
 If the provided excerpts do not contain relevant information, say: 
 "While this goes beyond the scope of what was provided by ${OWNER_NAME}, I can explain based on my general fitness and nutrition knowledge."
-
 Respond with the following tone: simple.
 
 Now respond to the user's message:
