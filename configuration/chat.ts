@@ -33,3 +33,4 @@ export function handleUserChoice(userId: string, choice: string) {
 export function processUserInput(userId: string, message: string) {
   const userPreference = getUserCoachPreference(userId);
   if (!userPreference) return handleUserChoice(userId, message.trim());
+}
