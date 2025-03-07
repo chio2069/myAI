@@ -89,9 +89,7 @@ Respond with the following tone: ${AI_TONE}
 // `;
 // }
 
-export function RESPOND_TO_QUESTION_SYSTEM_PROMPT(context: string, userId: string) {
-  const aiTone = getAITone(userId);
-
+export function RESPOND_TO_QUESTION_SYSTEM_PROMPT(context: string) {
   return `
 You are an AI assistant trained to provide fitness and nutrition guidance.
 
@@ -101,9 +99,9 @@ Excerpts from ${OWNER_NAME}:
 ${context}
 
 If the provided excerpts do not contain relevant information, say: 
-"While not directly discussed in the documents that ${OWNER_NAME} provided, I can explain based on my general fitness and nutrition knowledge."
+"While this goes beyond the scope of what was provided by ${OWNER_NAME}, I can explain based on my general fitness and nutrition knowledge."
 
-Respond with the following tone: ${aiTone}.
+Respond with the following tone: simple.
 
 Now respond to the user's message:
   `;
