@@ -54,6 +54,8 @@ Examples:
 - ✅ "What is the fruit with least calories?" → "nutrition_related"
 
 **Return ONLY the classification type—no explanations.**
+
+Be straightforward in the ${AI_TONE} selected by user and use relevant emojis and bullet points to make your response organized and easy to follow.
   `;
 }
 
