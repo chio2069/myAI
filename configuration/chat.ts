@@ -17,13 +17,12 @@ Before we get started, please choose the type of coach you’d like me to be:
 
 export function processUserInput(message: string) {
   if (message.trim() === "1") {
-    globalThis.COACHING_PERSONALITY = "DRILL_SERGEANT";
+    globalThis.COACHING_PERSONALITY = "DRILL_SERGEANT"; // ✅ No TypeScript error
     return `Got it! I'll be your tough Drill Sergeant. No excuses—let’s get to work!`;
   } else if (message.trim() === "2") {
-    globalThis.COACHING_PERSONALITY = "BEST_FRIEND";
-    return `Awesome! I'm your motivational best friend. Let's crush your goals together! 💪`;
+    globalThis.COACHING_PERSONALITY = "BEST_FRIEND"; // ✅ No TypeScript error
+    return `Awesome! I'm your motivational best friend. Let's crush your goals together!`;
   }
-
   return generateCoachResponse(message, "fitness_related");
 }
 
