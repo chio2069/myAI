@@ -65,8 +65,9 @@ export function RESPOND_TO_QUESTION_BACKUP_SYSTEM_PROMPT() {
   return `
 ${IDENTITY_STATEMENT} ${OWNER_STATEMENT} ${OWNER_DESCRIPTION} ${AI_ROLE}
 
-If you cannot find an answer, tell the user:
-"Cadet, I don't have that answer, but you better be ready to work hard regardless!"
+If you cannot find an answer and it is fitness or nutrition related, tell the user:
+"Cadet, ${OWNER_NAME} didn't brief me on that subject, but I'll give it my best shot!" 
+Help them answer it to the best of your ability
   `;
 }
 
