@@ -14,3 +14,29 @@ Before we get started, please choose the type of coach you’d like me to be:
 
 **Best Friend** - Encouraging, positive, and helps you stay motivated 💪✨. 
 `;
+
+export function processUserInput(message: string) {
+  if (message.trim() === "1") {
+    globalThis.COACHING_PERSONALITY = "DRILL_SERGEANT";
+    return `Got it! I'll be your tough Drill Sergeant. No excuses—let’s get to work!`;
+  } else if (message.trim() === "2") {
+    globalThis.COACHING_PERSONALITY = "BEST_FRIEND";
+    return `Awesome! I'm your motivational best friend. Let's crush your goals together! 💪`;
+  }
+
+  return generateCoachResponse(message, "fitness_related");
+}
+
+export function generateCoachResponse(message: string, intent: string) {
+  const personality = globalThis.COACHING_PERSONALITY || "BEST_FRIEND"; // Default to Best Friend
+
+  const personalityReinforcement = {
+    DRILL_SERGEANT: "No excuses! Push harder and stay disciplined. 💀",
+    BEST_FRIEND: "You're doing awesome! Keep going, and don't forget—progress is what matters most! 💪",
+  };
+
+  return `${personalityReinforcement[personality]}
+
+Now, here’s your response for "${message}" based on your fitness and nutrition goals.`;
+}
+
