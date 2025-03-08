@@ -3,30 +3,17 @@ import {
   OWNER_NAME,
   OWNER_DESCRIPTION,
   AI_ROLE,
+  AI_TONE
 } from "@/configuration/identity";
 import { Chat } from "@/types";
-import { getAITone, getAIRole, getUserCoachPreference } from "@/configuration/identity";
+// import { getAITone, getAIRole, getUserCoachPreference } from "@/configuration/identity";
 
 const IDENTITY_STATEMENT = `You are an AI assistant named ${AI_NAME}.`;
 const OWNER_STATEMENT = `You are owned and created by ${OWNER_NAME}.`;
 
-// export function getDynamicPrompt(userId: string, userIntent: string) {
-//   const aiTone = getAITone(userId);
-//   const aiRole = getAIRole(userId);
-
-//   const prompts = {
-//     general_question: `Provide a direct and helpful response in a concise manner.`,
-//     fitness_related: `Provide structured and expert-level fitness advice. Ensure responses are actionable and backed by science.`,
-//     nutrition_related: `Offer clear and evidence-based nutrition guidance with examples.`,
-//     out_of_scope: `🚫 I focus on fitness, finance, and data analysis. If you have a relevant question, feel free to ask!`,
-//   };
-
-//   return prompts[userIntent as keyof typeof prompts] || `Respond in an expert manner.`;
-// }
-
 export function getDynamicPrompt(userId: string, userIntent: string) {
-  const aiTone = getAITone(userId);
-  const aiRole = getAIRole(userId);
+  // const aiTone = getAITone(userId);
+  // const aiRole = getAIRole(userId);
 
   const personalityReinforcement = {
     STRICT: "Stay disciplined and stop looking for shortcuts. No excuses, just results.",
@@ -35,14 +22,13 @@ export function getDynamicPrompt(userId: string, userIntent: string) {
   };
 
   return `
-You are a ${aiRole}. Your response should always align with this coaching style.
+You are a ${AI_ROLE}. Your response should always align with this coaching style.
 
-Reminder of your coaching approach: ${aiTone}
+Reminder of your coaching approach: ${AI_TONE}
 
 Now respond to the user’s question while maintaining this personality:
   `;
 }
-
 
 export function INTENTION_PROMPT() {
   return `
@@ -160,6 +146,6 @@ You are an AI assistant responsible for generating contextually relevant text ex
 User Inquiry History:
 ${mostRecentMessages.map((message) => `${message.role}: ${message.content}`).join("\n")}
 
-If the user is asking about fitness or nutrition, generate a structured response based on previous context.
+If the user asks about fitness or nutrition, generate a structured response based on previous context.
   `;
 }
