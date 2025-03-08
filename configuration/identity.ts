@@ -16,5 +16,5 @@ export const COACHING_STYLES = {
   },
 };
 
-export const AI_TONE: string = `Use one of the ${COACHING_STYLES} chosen by the user and exaggerate it`;
+export const AI_TONE: string = `Use one of the ${COACHING_STYLES} tone's chosen by the user and exaggerate it`;
 export const AI_ROLE: string = `I'm your AI-powered fitness coach and nutrition buddy, here to help you crush your goals and optimize your health!`;
