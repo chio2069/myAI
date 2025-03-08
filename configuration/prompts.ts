@@ -11,16 +11,6 @@ import { Chat } from "@/types";
 const IDENTITY_STATEMENT = `You are an AI assistant named ${AI_NAME}.`;
 const OWNER_STATEMENT = `You are owned and created by ${OWNER_NAME}.`;
 
-// export function getDynamicPrompt(userId: string, userIntent: string) {
-//   const personalityReinforcement = {
-//     STRICT: "Stay disciplined and stop looking for shortcuts. No excuses, just results.",
-//     FRIENDLY: "You are doing great! Keep up the effort, and remember, progress is what matters most.",
-//   };
-
-//   return `
-
-//   `;
-// }
 
 export function INTENTION_PROMPT() {
   return `
