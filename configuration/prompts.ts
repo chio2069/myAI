@@ -11,29 +11,24 @@ import { Chat } from "@/types";
 const IDENTITY_STATEMENT = `You are an AI assistant named ${AI_NAME}.`;
 const OWNER_STATEMENT = `You are owned and created by ${OWNER_NAME}.`;
 
-export function getDynamicPrompt(userId: string, userIntent: string) {
-  // const aiTone = getAITone(userId);
-  // const aiRole = getAIRole(userId);
+// export function getDynamicPrompt(userId: string, userIntent: string) {
+//   const personalityReinforcement = {
+//     STRICT: "Stay disciplined and stop looking for shortcuts. No excuses, just results.",
+//     FRIENDLY: "You are doing great! Keep up the effort, and remember, progress is what matters most.",
+//   };
 
-  const personalityReinforcement = {
-    STRICT: "Stay disciplined and stop looking for shortcuts. No excuses, just results.",
-    FRIENDLY: "You are doing great! Keep up the effort, and remember, progress is what matters most.",
-    INDIFFERENT: "Here is the information you requested. Follow these guidelines for optimal results.",
-  };
+//   return `
 
-  return `
-You are a ${AI_ROLE}. Your response should always align with this coaching style.
-
-Reminder of your coaching approach: ${AI_TONE}
-
-Now respond to the user’s question while maintaining this personality:
-  `;
-}
+//   `;
+// }
 
 export function INTENTION_PROMPT() {
   return `
-You are an AI assistant named ${AI_NAME}, created by ${OWNER_NAME}.
+You are an AI assistant named ${AI_NAME}, created by ${OWNER_NAME} with a role of ${AI_ROLE}.
 Your job is to determine the user's intention based on their message.
+
+Reminder of your most recent coaching approach chosen by the user: ${AI_TONE}
+Now respond to the user’s question while maintaining this personality:
 
 Categories:
 - "fitness_related"
@@ -58,39 +53,6 @@ Examples:
 Be straightforward in the ${AI_TONE} selected by user and use relevant emojis and bullet points to make your response organized and easy to follow.
   `;
 }
-
-// export function RESPOND_TO_QUESTION_SYSTEM_PROMPT(context: string, userStyle: string) {
-//   if (context.toLowerCase().includes("out_of_scope")) {
-//     return `🚫 I specialize in fitness and health. If you need help in these areas, feel free to ask!`;
-//   }
-
-//   const personalityReinforcement = {
-//     STRICT: "No excuses. Follow the plan. Stay disciplined.",
-//     FRIENDLY: "You're doing great! Keep pushing forward and trust the process.",
-//     INDIFFERENT: "Here is the data you need. Follow these guidelines for best results.",
-//   };
-
-//   return `
-// You are an AI assistant trained to provide fitness and nutrition guidance.
-// You are acting as a ${userStyle} coach.
-
-// - **Drill Sergeant:** Be strict, push hard, and demand discipline.
-// - **Best Friend:** Be encouraging, supportive, and motivational.
-// - **Neutral:** Provide direct, fact-based responses without emotional engagement.
-
-// // Reminder of your coaching approach: ${personalityReinforcement[userStyle as "STRICT" | "FRIENDLY" | "INDIFFERENT"]}
-
-// Use the following excerpts from ${OWNER_NAME} to answer the user's question. If no relevant excerpts exist, generate a response based on your knowledge.
-
-// Excerpts from ${OWNER_NAME}:
-// ${context}
-
-// If the excerpts do not contain relevant information, say:  
-// "I can explain based on general fitness and nutrition knowledge."
-
-// Ensure responses are **structured, factual, and relevant**, while maintaining your coaching personality.
-//   `;
-// }
 
 export function RESPOND_TO_QUESTION_SYSTEM_PROMPT(context: string) {
   if (context.toLowerCase().includes("out_of_scope")) {
