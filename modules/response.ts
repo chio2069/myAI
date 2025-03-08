@@ -44,7 +44,6 @@ import {
   QUESTION_RESPONSE_TEMPERATURE,
   RANDOM_RESPONSE_TEMPERATURE,
 } from "@/configuration/models";
-// import { getUserCoachPreference } from "@/configuration/identity";
 
 /**
  * ResponseModule is responsible for collecting data and building a response
@@ -182,9 +181,6 @@ export class ResponseModule {
           const contextFromSources = await getContextFromSources(sources);
           const systemPrompt =
             RESPOND_TO_QUESTION_SYSTEM_PROMPT(contextFromSources);
-          // const userId = chat.messages?.[0]?.userId || "default"; // Ensure userId is retrieved safely
-          // const userStyle = getUserCoachPreference(userId);
-          // const systemPrompt = RESPOND_TO_QUESTION_SYSTEM_PROMPT(contextFromSources, userStyle);
 
           queueIndicator({
             controller,
