@@ -13,6 +13,4 @@ Before we get started, please choose the type of coach you’d like me to be:
 **Drill Sergeant** - Pushes you hard, keeps you accountable, and is no-nonsense. 
 
 **Best Friend** - Encouraging, positive, and helps you stay motivated 💪✨. 
-
-**Neutral** - Just gives straight facts without any motivation.
 `;
