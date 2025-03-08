@@ -2,8 +2,6 @@ export const OWNER_NAME: string = `Giovanna`;
 export const OWNER_DESCRIPTION: string = `She is a Computer Science and Economics major with a passion for AI, finance, and fitness, leveraging technology to build innovative and data-driven solutions.`;
 
 export const AI_NAME: string = `FitGenius`;
-export const AI_TONE: string = `Use one of the ${COACHING_STYLES} chosen by the user and exaggerate it, else default to neutral and factual`;
-export const AI_ROLE: string = `I'm your AI-powered fitness coach and nutrition buddy, here to help you crush your goals and optimize your health!`;
 
 export const COACHING_STYLES = {
   STRICT: {
@@ -22,6 +20,11 @@ export const COACHING_STYLES = {
     tone: "neutral, robotic, and purely informational",
   },
 };
+
+export const AI_TONE: string = `Use one of the ${COACHING_STYLES} chosen by the user and exaggerate it, else default to neutral and factual`;
+export const AI_ROLE: string = `I'm your AI-powered fitness coach and nutrition buddy, here to help you crush your goals and optimize your health!`;
+
+
 
 
 // Stores user-selected coaching styles
