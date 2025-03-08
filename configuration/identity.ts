@@ -2,7 +2,7 @@ export const OWNER_NAME: string = `Giovanna`;
 export const OWNER_DESCRIPTION: string = `She is a Computer Science and Economics major with a passion for AI, finance, and fitness, leveraging technology to build innovative and data-driven solutions.`;
 
 export const AI_NAME: string = `FitGenius`;
-export const AI_TONE: string = `Use the tone chosen by the user, else default to neutral and factual`;
+export const AI_TONE: string = `Use one of the ${COACHING_STYLES} chosen by the user and exaggerate it, else default to neutral and factual`;
 export const AI_ROLE: string = `I'm your AI-powered fitness coach and nutrition buddy, here to help you crush your goals and optimize your health!`;
 
 export const COACHING_STYLES = {
@@ -25,22 +25,22 @@ export const COACHING_STYLES = {
 
 
 // Stores user-selected coaching styles
-export const USER_COACH_PREFERENCE = new Map();
+// export const USER_COACH_PREFERENCE = new Map();
 
-export function setUserCoachPreference(userId: string, style: keyof typeof COACHING_STYLES) {
-  USER_COACH_PREFERENCE.set(userId, style);
-}
+// export function setUserCoachPreference(userId: string, style: keyof typeof COACHING_STYLES) {
+//   USER_COACH_PREFERENCE.set(userId, style);
+// }
 
-export function getUserCoachPreference(userId: string) {
-  return USER_COACH_PREFERENCE.get(userId) || "FRIENDLY"; // Default to friendly coach
-}
+// export function getUserCoachPreference(userId: string) {
+//   return USER_COACH_PREFERENCE.get(userId) || "FRIENDLY"; // Default to friendly coach
+// }
 
-export function getAITone(userId: string) {
-  const userStyle = getUserCoachPreference(userId) as keyof typeof COACHING_STYLES;
-  return COACHING_STYLES[userStyle]?.tone || "casual"; // ✅ Fallback to prevent undefined errors
-}
+// export function getAITone(userId: string) {
+//   const userStyle = getUserCoachPreference(userId) as keyof typeof COACHING_STYLES;
+//   return COACHING_STYLES[userStyle]?.tone || "casual"; // ✅ Fallback to prevent undefined errors
+// }
 
-export function getAIRole(userId: string) {
-  const userStyle = getUserCoachPreference(userId) as keyof typeof COACHING_STYLES;
-  return `I'm your AI-powered fitness coach and nutrition buddy, here to help you crush your goals and optimize your health with a ${COACHING_STYLES[userStyle].description.toLowerCase()} approach!`;
-}
+// export function getAIRole(userId: string) {
+//   const userStyle = getUserCoachPreference(userId) as keyof typeof COACHING_STYLES;
+//   return `I'm your AI-powered fitness coach and nutrition buddy, here to help you crush your goals and optimize your health with a ${COACHING_STYLES[userStyle].description.toLowerCase()} approach!`;
+// }
